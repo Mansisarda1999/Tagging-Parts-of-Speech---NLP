@@ -194,30 +194,6 @@ class Solver:
 
           
         return result
-    def func(self,sentence):
-        global dp1
-        r = []
-        dp1 = [[0 for i in range(12)] for j in range(len(sentence))]
-        for i in range(len(sentence)):
-            w = sentence[i]
-            if i==0:
-              for index in range(12):
-                try:
-                  dp1[i][index] = (prob_words[w][index],-1)
-                except:
-                  dp1[i][index] = (0.001,-1)
-            else:
-              for index in range(12):
-                li = []
-                for k in range(12):
-                  try:
-                    li.append(prob_words[w][index]*prob_matrix[k][index]*dp1[i-1][k][0])
-                  except:
-                    li.append(0.001*prob_matrix[k][index]*dp1[i-1][k][0])
-                dp1[i][index] = (max(li),li.index(max(li))) 
-            prob = [p[0] for p in dp1[i]]   
-            r.append(pos[prob.index(max(prob))].lower())
-        return r
 
     def mcmc_prob(self,words,sample):
         s1 = pos.index(sample[0].upper())
@@ -273,7 +249,6 @@ class Solver:
         count_pos_tag_array = []
         sample = self.simplified(sentence) 
         total_iter,burning_iter= 20 , 15 
-        r2 = self.func(sentence)
         words = [w for w in sentence]
         for k in range(total_iter):
             sample = self.sampling(words, sample)
