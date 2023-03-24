@@ -20,7 +20,7 @@ import math
 class Solver:
     # Calculate the log of the posterior probability of a given sentence
     #  with a given part-of-speech labeling. Right now just returns -999 -- fix this!
-    def posterior(self, model, sentence, label):                               ## calcu;ating the posterior for each model
+    def posterior(self, model, sentence, label):                               ## calculating the posterior for each model
         if model == "Simple":
             output=0
             for ind,word in enumerate(sentence):
@@ -142,8 +142,6 @@ class Solver:
       
       naive_bayes()
       
-
-    # Functions for each algorithm. Right now this just returns nouns -- fix this!
     #
     def simplified(self, sentence): 
         pos_tag=[]   
@@ -181,7 +179,7 @@ class Solver:
             prob = [p[0] for p in dp[i]]   
             result.append(pos[prob.index(max(prob))].lower())
           
-          ## Backtracking was giving low accuracy
+          ## Backtracking 
           '''
           l = dp[len(sentence)-1]
           
@@ -291,8 +289,7 @@ class Solver:
 
 
 
-    # This solve() method is called by label.py, so you should keep the interface the
-    #  same, but you can change the code itself. 
+    # This solve() method is called by label.py.
     # It should return a list of part-of-speech labelings of the sentence, one
     #  part of speech per word.
     #
