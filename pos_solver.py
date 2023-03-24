@@ -221,18 +221,27 @@ class Solver:
 
     def mcmc_prob(self,words,sample):
         s1 = pos.index(sample[0].upper())
+        
+        #the log probability of the first part of speech in the sample sequence based on the initial probability of each part of speech in the corpus. 
         prob_s1 = math.log(initial_probaility[s1] / sum(initial_probaility),10)
+        
         v1,v2,v3 = 0,0,0
         for i in range(len(sample)):
             try:
-              v2 += math.log(max(prob_words[words[i]][i],0.0001),10)
+              v2 += math.log(max(prob_words[words[i]][pos.index(sample[i])],0.0001),10)     ## calculates the log probability of each word in words being 
+                                                                         ## associated with the corresponding part of speech in sample, and 
+                                                                         ## sums up these probabilities.
             except:
               v2+=math.log(0.0001,10)
+            
+            #calculates the log probability of each transition between two consecutive parts of speech, based on the probability matrix of part of speech transitions 
+            #and the log probability of each transition between every three consecutive parts of speech, based on a second-level probability matrix.
             if i != 0:
                 v1 += math.log(max(prob_matrix[pos.index(sample[i - 1].upper())][pos.index(sample[i].upper())],0.0001),10)
             if i != 0 and i != 1:
                 v3 += math.log(max(second_level_prob_matrix[pos.index(sample[i - 2].upper())][pos.index(sample[i - 1].upper())][pos.index(sample[i].upper())],0.0001),10)
-        return prob_s1+v1+v2+v3
+        
+        return prob_s1+v1+v2+v3 ## sums up all these probabilities
         
     def sampling(self, words, s1):
         pos_tag = pos
@@ -285,7 +294,7 @@ class Solver:
         for ind in range(len(words)):
           final_pos_tag.append(max(count_pos_tag_array[ind], key = count_pos_tag_array[ind].get))
         re = [ pos_tag.lower() for pos_tag in final_pos_tag ]
-        return r2
+        return re
 
 
 
