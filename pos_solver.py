@@ -3,8 +3,6 @@
 #
 # Your names and user ids:
 # 1. Mansi Sarda (msarda)
-# 2. Shyam Makwana (smakwana)
-# 3. Lakshay Madaan (lmadaan)
 # (Based on skeleton code by D. Crandall)
 #
 
